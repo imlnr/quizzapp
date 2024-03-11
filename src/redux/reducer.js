@@ -1,3 +1,4 @@
+import { log } from "util";
 import { GET_QUESTION_FAILURE, GET_QUESTION_REQUEST, GET_QUESTION_SUCCESS } from "./action-types"
 
 const initialState = {
@@ -12,10 +13,10 @@ export const reducer = (state = initialState, action) => {
         case GET_QUESTION_REQUEST:
             return { ...state, isLoading: true, isError: false };
         case GET_QUESTION_SUCCESS:
-            return { ...state, isLoading: false, isError: false };
+            return { ...state, isLoading: false, isError: false, questions: action.payload };
         case GET_QUESTION_FAILURE:
             return { ...state, isLoading: false, isError: true };
         default:
-            return state
+            return state;
     }
 }

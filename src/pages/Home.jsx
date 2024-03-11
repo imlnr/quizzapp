@@ -1,69 +1,99 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchquestions } from '../redux/action';
+import { useNavigate } from 'react-router-dom';
+import {
+    Box,
+    Button,
+    FormControl,
+    FormLabel,
+    Input,
+    Select,
+} from '@chakra-ui/react';
 
 const Home = () => {
+    const state = useSelector((state) => state);
+    console.log(state);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         name: '',
         category: '',
         difficulty: '',
-        questionCount: ''
+        questionCount: '',
     });
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: value
+            [name]: value,
         });
     };
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+        dispatch(fetchquestions(formData));
         console.log(formData);
+        setTimeout(() => {
+            navigate('/quiz-dashboard');
+        }, 2000); // Delay of 2 seconds (2000 milliseconds)
     };
 
+
+    useEffect(() => { }, [dispatch, handleFormSubmit]);
+
     return (
-        <div className='home-cont'>
-            <form onSubmit={handleFormSubmit} className="home-inn">
+        <Box className='home-cont'>
+            <form onSubmit={handleFormSubmit} className='home-inn'>
                 <h1>Set up your Quiz</h1>
-                <input
-                    type="text"
-                    name='name'
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder='Enter Your Name'
-                />
-                <select
-                    name='category'
-                    value={formData.category}
-                    onChange={handleInputChange}
-                >
-                    <option value="" disabled>Select a Category</option>
-                    <option value="Sports">Sports</option>
-                    <option value="Geography">Geography</option>
-                    <option value="General Knowledge">General Knowledge</option>
-                    <option value="politics">Politics</option>
-                </select>
-                <select
-                    name="difficulty"
-                    value={formData.difficulty}
-                    onChange={handleInputChange}
-                >
-                    <option value="" disabled>Select a Difficulty Level</option>
-                    <option value="hard">Hard</option>
-                    <option value="medium">Medium</option>
-                    <option value="easy">Easy</option>
-                </select>
-                <input
-                    type="number"
-                    name="questionCount"
-                    value={formData.questionCount}
-                    onChange={handleInputChange}
-                    placeholder='Choose number of Questions'
-                />
-                <button type='submit'>START QUIZ</button>
+                <FormControl>
+                    <Input
+                        type='text'
+                        name='name'
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder='Enter Your Name'
+                    />
+                </FormControl>
+                <FormControl>
+                    <Select
+                        name='category'
+                        value={formData.category}
+                        onChange={handleInputChange}
+                        placeholder='Select a Category'
+                    >
+                        <option value='9'>General Knowledge</option>
+                        <option value='21'>Sports</option>
+                        <option value='22'>Geography</option>
+                        <option value='24'>Politics</option>
+                    </Select>
+                </FormControl>
+                <FormControl>
+                    <Select
+                        name='difficulty'
+                        value={formData.difficulty}
+                        onChange={handleInputChange}
+                        placeholder='Select a Difficulty Level'
+                    >
+                        <option value='hard'>Hard</option>
+                        <option value='medium'>Medium</option>
+                        <option value='easy'>Easy</option>
+                    </Select>
+                </FormControl>
+                <FormControl>
+                    <Input
+                        type='number'
+                        name='questionCount'
+                        value={formData.questionCount}
+                        onChange={handleInputChange}
+                        placeholder='Choose number of Questions'
+                    />
+                </FormControl>
+                <Button type='submit'>START QUIZ</Button>
             </form>
-        </div>
+        </Box>
     );
-}
+};
 
 export default Home;
