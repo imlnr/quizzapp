@@ -17,6 +17,7 @@ const Navbar = () => {
                     <Link to="/" className="nav-link">Home</Link>
                     <Link to="/about" className="nav-link">About</Link>
                     <Link to="/contact" className="nav-link">Contact Us</Link>
+                    <Link to='/quiz-dashboard' >Quizs</Link>
                     <span className="nav-link" onClick={togglePopup}>Contest</span>
                     <span className="nav-link" onClick={togglePopup}>Category</span>
                 </div>

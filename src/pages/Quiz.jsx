@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Quizcard from '../components/Quizcard';
+import { useNavigate } from 'react-router-dom';
 
 const Quiz = () => {
   const state = useSelector((state) => state.questions);
@@ -9,6 +10,10 @@ const Quiz = () => {
   const setto = ()=>{
     settotal(total+1)
   }
+  const navigate = useNavigate();
+  const CheckScore = ()=>{
+    navigate('/result',{props:total});
+  }
 
   return (
     <div className='quiz-questions'>
@@ -16,7 +21,7 @@ const Quiz = () => {
         <Quizcard key={ele.id} settotal={setto} data={ele} />
       ))}
 
-      <button>End Quiz</button>
+      <button onClick={CheckScore}>End Quiz</button>
     </div>
   );
 };
