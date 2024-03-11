@@ -67,7 +67,6 @@
     text-decoration: none;
 }
 
-/* Media queries for responsiveness */
 
 @media screen and (max-width: 768px) {
     .container {
